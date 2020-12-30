@@ -36,11 +36,6 @@ module.exports = function (webpackEnv) {
         },
       ],
     },
-    optimization: isEnvDevelopment
-      ? false
-      : isEnvProduction && {
-          minimize: true,
-        },
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
     },
