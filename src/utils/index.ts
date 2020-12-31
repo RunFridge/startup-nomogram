@@ -1,4 +1,4 @@
-export function computeBaseLog(x: number, y: number): number {
+function computeBaseLog(x: number, y: number): number {
   /*
       Compute logarithm of y with base x
 
@@ -7,4 +7,12 @@ export function computeBaseLog(x: number, y: number): number {
         computeBaseLog(2, 8) = 3
     */
   return Math.log(y) / Math.log(x);
+}
+
+export function computeBreakEven(state: moneyState): number {
+  const breakEvenPoint = computeBaseLog(
+    state.growth / 100 + 1,
+    state.expense / state.revenue
+  );
+  return breakEvenPoint;
 }

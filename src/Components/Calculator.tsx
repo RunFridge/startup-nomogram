@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { computeBreakEven } from "../utils";
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -29,6 +30,14 @@ const ButtonWrapper = styled.div`
   }
 `;
 
+const ComputeButtom = styled.button`
+  width: 100%;
+`;
+
+const Result = styled.h3`
+  text-align: center;
+`;
+
 // STYLE END ====
 
 function Calculator() {
@@ -38,12 +47,13 @@ function Calculator() {
   const [expense, setExpense] = useState<number>(1600);
   const [revenue, setRevenue] = useState<number>(100);
   const [growth, setGrowth] = useState<number>(2.5);
+  const [profitYear, setProfitYear] = useState<number>();
+
+  const DAYS_PER_YEAR = 365.2425;
+  const WEEKS_PER_MONTH = DAYS_PER_YEAR / 7 / 12;
+  const WEEKS_PER_YEAR = DAYS_PER_YEAR / 7;
 
   const handleTimeFrameChange = () => {
-    const DAYS_PER_YEAR = 365.2425;
-    const WEEKS_PER_MONTH = DAYS_PER_YEAR / 7 / 12;
-    const WEEKS_PER_YEAR = DAYS_PER_YEAR / 7;
-
     const newState: moneyState = {
       expense,
       revenue,
@@ -77,7 +87,7 @@ function Calculator() {
     setGrowth(newState.growth);
   };
 
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     switch (id) {
       case "expense":
@@ -88,6 +98,21 @@ function Calculator() {
         break;
       case "growth":
         setGrowth(parseFloat(value));
+        break;
+    }
+  };
+
+  const handleCalculate = () => {
+    const breakEvenPoint = computeBreakEven({ expense, revenue, growth });
+    switch (timeFrame) {
+      case "weekly":
+        setProfitYear(breakEvenPoint / WEEKS_PER_YEAR);
+        break;
+      case "monthly":
+        setProfitYear(breakEvenPoint / 12);
+        break;
+      case "yearly":
+        setProfitYear(breakEvenPoint);
         break;
     }
   };
@@ -111,7 +136,7 @@ function Calculator() {
           min="100"
           max="50000"
           value={Math.round(expense)}
-          onChange={handleInput}
+          onChange={handleInputChange}
         />
         <span>(만원)</span>
       </InputWrapper>
@@ -124,7 +149,7 @@ function Calculator() {
           min="100"
           max="50000"
           value={Math.round(revenue)}
-          onChange={handleInput}
+          onChange={handleInputChange}
         />
         <span>(만원)</span>
       </InputWrapper>
@@ -138,10 +163,12 @@ function Calculator() {
           max="100"
           step="0.1"
           value={growth.toFixed(1)}
-          onChange={handleInput}
+          onChange={handleInputChange}
         />
         <span>(%)</span>
       </InputWrapper>
+      <ComputeButtom onClick={handleCalculate}>계산</ComputeButtom>
+      <Result>손익 분기점까지 약 {profitYear?.toFixed(2) || "?"}년</Result>
     </div>
   );
 }
