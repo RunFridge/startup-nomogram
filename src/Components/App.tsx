@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import GlobalStyle from "../globlaStyles";
 import Calculator from "./Calculator";
 
 const Title = styled.h1`
@@ -10,10 +11,11 @@ const Title = styled.h1`
 
 function App() {
   return (
-    <div>
+    <>
+      <GlobalStyle />
       <Title>Startup Nomogram</Title>
       <Calculator />
-    </div>
+    </>
   );
 }
 
