@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { TimeFrame } from "../utils";
+import { TimeFrame, startupCalculator } from "../utils";
 import MoneyInput from "./MoneyInput";
 import TimeFrameSwitch from "./TimeFrameSwitch";
 
@@ -9,6 +9,8 @@ const InputsContainer = styled.div`
   flex-direction: column;
 `;
 // STYLE END ====
+
+const suCalc = new startupCalculator();
 
 function Calculator() {
   const [moneyInputs, setMoneyInputs] = useState<MoneyInputs>({
@@ -36,7 +38,14 @@ function Calculator() {
     setMoneyInputs(newMoneyInput);
   };
 
-  const handleTimeframeChange = () => {};
+  const handleTimeframeChange = () => {
+    const [newTimeFrame, newMoneyInput] = suCalc.convertTimeFrame(
+      moneyInputs,
+      timeFrame
+    );
+    setMoneyInputs(newMoneyInput);
+    setTimeFrame(newTimeFrame);
+  };
 
   return (
     <InputsContainer>
