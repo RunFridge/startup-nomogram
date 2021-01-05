@@ -80,6 +80,10 @@ export class startupCalculator {
 
     return [newTimeFrame, newState, newMoneyRange];
   }
+
+  computeBreakEvenYear(breakEvenVal: number): number {
+    return Math.round((breakEvenVal / (this.DAYS_PER_YEAR / 7)) * 10) / 10;
+  }
 }
 
 export const koreanLocalizeValue = (manVal: number): string => {

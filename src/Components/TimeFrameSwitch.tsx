@@ -23,14 +23,17 @@ const TimeFrameWrapper = styled.div`
 `;
 
 const TimeFrameDisplay = styled.h1`
-  font-size: 1.5em;
+  font-size: 2em;
 `;
 
 const TimeFrameButton = styled.h1`
   font-size: 1em;
-  color: teal;
+  color: #3498db;
   cursor: pointer;
   user-select: none;
+  &:hover {
+    color: #f1c40f;
+  }
   &:active {
     color: tomato;
   }
@@ -47,11 +50,11 @@ function TimeFrameSwitch({ currentTimeFrame, onClick }: _Props) {
   const getTimeframeText = (): string => {
     switch (currentTimeFrame) {
       case TimeFrame.weekly:
-        return "주간";
+        return "주간 (weekly)";
       case TimeFrame.monthly:
-        return "월간";
+        return "월간 (monthly)";
       case TimeFrame.yearly:
-        return "연간";
+        return "연간 (yearly)";
     }
   };
 

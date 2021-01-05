@@ -4,22 +4,26 @@ import { koreanLocalizeValue, TimeFrame } from "../utils";
 
 const InputWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 10fr 1fr 1fr 3fr;
+  grid-template-columns: 1fr 4fr 1fr 1fr;
   margin: 1em 0;
-
-  input[type="number"] {
-    width: 80%;
-  }
 
   & > :not(:nth-child(2)) {
     place-items: center;
   }
 `;
 
+const NumberInputWrapper = styled.div`
+  display: flex;
+`;
+
+const NumberInput = styled.input`
+  padding: 0.5em;
+  margin: 0 1em;
+  border-radius: 2em;
+`;
+
 const Label = styled.label`
-  &:not(:nth-child(4)) {
-    text-align: center;
-  }
+  text-align: center;
 `;
 
 const LocalizedValue = styled.h4`
@@ -51,8 +55,8 @@ function MoneyInput({
   const rangeId = moneyType + "Range";
   const numberId = moneyType + "Number";
 
-  const isExp = label === "지출";
-  const isRev = label === "수익";
+  const isExp = label.includes("지출");
+  const isRev = label.includes("수익");
   let isExpRev = isExp || isRev;
 
   let localTimeFrame;
@@ -79,15 +83,17 @@ function MoneyInput({
         step={step}
         max={max}
       />
-      <input
-        type="number"
-        id={numberId}
-        value={value}
-        onChange={onChange}
-        step={step}
-        max={max}
-      />
-      <Label htmlFor={numberId}>{unit}</Label>
+      <NumberInputWrapper>
+        <NumberInput
+          type="number"
+          id={numberId}
+          value={value}
+          onChange={onChange}
+          step={step}
+          max={max}
+        />
+        <Label htmlFor={numberId}>{unit}</Label>
+      </NumberInputWrapper>
       {isExpRev ? (
         <Label htmlFor={numberId}>
           <LocalizedValue color={isExp ? "#e74c3c" : "#27ae60"}>

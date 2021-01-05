@@ -8,6 +8,12 @@ const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const BreakEvenYear = styled.p`
+  text-align: center;
+  margin: 1em 0;
+  font-weight: bold;
+  font-size: 1.5em;
+`;
 // STYLE END ====
 
 const suCalc = new startupCalculator();
@@ -21,6 +27,9 @@ function Calculator() {
   const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.weekly);
   const [moneyInputRange, setMoneyInputRange] = useState<MoneyRange>(
     moneyRange.weekly
+  );
+  const [breakEvenVal, setBreakEvenVal] = useState<number>(
+    suCalc.computeBreakEven(moneyInputs)
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +48,7 @@ function Calculator() {
     }
 
     setMoneyInputs(newMoneyInput);
+    setBreakEvenVal(suCalc.computeBreakEven(newMoneyInput));
   };
 
   const handleTimeframeChange = () => {
@@ -59,7 +69,7 @@ function Calculator() {
         onClick={handleTimeframeChange}
       />
       <MoneyInput
-        label="지출"
+        label="➖ 지출"
         unit="만원"
         moneyType="expense"
         value={Math.round(moneyInputs.expense)}
@@ -68,7 +78,7 @@ function Calculator() {
         timeFrame={timeFrame}
       />
       <MoneyInput
-        label="수익"
+        label="➕ 수익"
         unit="만원"
         moneyType="revenue"
         value={Math.round(moneyInputs.revenue)}
@@ -77,7 +87,7 @@ function Calculator() {
         timeFrame={timeFrame}
       />
       <MoneyInput
-        label="성장"
+        label="📈 성장"
         unit="%"
         moneyType="growth"
         value={parseFloat(moneyInputs.growth.toFixed(1))}
@@ -86,6 +96,14 @@ function Calculator() {
         step={moneyInputRange.growthStep}
         timeFrame={timeFrame}
       />
+      <BreakEvenYear>
+        {breakEvenVal === Infinity
+          ? "📉 성장을 못하고 있어요 😥 📉"
+          : breakEvenVal <= 0
+          ? "💸 이미 돈 많이 버는 중 😎 💸"
+          : `📈 약 ${suCalc.computeBreakEvenYear(breakEvenVal)}년
+        후 손익분기 😁 📈`}
+      </BreakEvenYear>
     </InputsContainer>
   );
 }
