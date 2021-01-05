@@ -42,7 +42,7 @@ module.exports = function (webpackEnv) {
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        title: "React + TS template",
+        title: "Startup Nomogram",
         template: appHtml,
       }),
       new WebpackManifestPlugin(),
