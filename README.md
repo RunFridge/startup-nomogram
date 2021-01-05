@@ -9,6 +9,9 @@
 [![](https://img.shields.io/badge/author-RunFridge-green?style=flat)](https://github.com/RunFridge/startup-nomogram)
 [![](https://img.shields.io/github/license/RunFridge/startup-nomogram)](https://github.com/RunFridge/startup-nomogram/blob/master/LICENSE)
 
+### Demo
+- [Try it out](https://runfridge.github.io/startup-nomogram/)
+
 ### TODO list
 
 - [x] Growth Calculating Function
