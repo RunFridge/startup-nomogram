@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { TimeFrame, startupCalculator } from "../utils";
+import { TimeFrame, moneyRange, startupCalculator } from "../utils";
 import MoneyInput from "./MoneyInput";
 import TimeFrameSwitch from "./TimeFrameSwitch";
 
@@ -14,11 +14,14 @@ const suCalc = new startupCalculator();
 
 function Calculator() {
   const [moneyInputs, setMoneyInputs] = useState<MoneyInputs>({
-    expense: 1600,
-    revenue: 100,
+    expense: 160,
+    revenue: 10,
     growth: 2.5,
   });
   const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.weekly);
+  const [moneyInputRange, setMoneyInputRange] = useState<MoneyRange>(
+    moneyRange.weekly
+  );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -39,12 +42,14 @@ function Calculator() {
   };
 
   const handleTimeframeChange = () => {
-    const [newTimeFrame, newMoneyInput] = suCalc.convertTimeFrame(
-      moneyInputs,
-      timeFrame
-    );
-    setMoneyInputs(newMoneyInput);
+    const [
+      newTimeFrame,
+      newMoneyInput,
+      newMoneyRange,
+    ] = suCalc.convertTimeFrame(moneyInputs, timeFrame, moneyInputRange);
     setTimeFrame(newTimeFrame);
+    setMoneyInputs(newMoneyInput);
+    setMoneyInputRange(newMoneyRange);
   };
 
   return (
@@ -57,22 +62,29 @@ function Calculator() {
         label="지출"
         unit="만원"
         moneyType="expense"
-        value={moneyInputs.expense}
+        value={Math.round(moneyInputs.expense)}
         onChange={handleChange}
+        max={moneyInputRange.expRevMax}
+        timeFrame={timeFrame}
       />
       <MoneyInput
         label="수익"
         unit="만원"
         moneyType="revenue"
-        value={moneyInputs.revenue}
+        value={Math.round(moneyInputs.revenue)}
         onChange={handleChange}
+        max={moneyInputRange.expRevMax}
+        timeFrame={timeFrame}
       />
       <MoneyInput
         label="성장"
         unit="%"
         moneyType="growth"
-        value={moneyInputs.growth}
+        value={parseFloat(moneyInputs.growth.toFixed(1))}
         onChange={handleChange}
+        max={moneyInputRange.growthMax}
+        step={moneyInputRange.growthStep}
+        timeFrame={timeFrame}
       />
     </InputsContainer>
   );
