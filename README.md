@@ -11,9 +11,9 @@
 
 ### TODO list
 
-- [ ] Growth Calculating Function
+- [x] Growth Calculating Function
 - [ ] Interactive Canvas
-- [ ] Styling
+- [x] Styling
 
 ### Tech list
 
