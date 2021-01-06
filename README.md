@@ -17,6 +17,7 @@
 - [x] Growth Calculating Function
 - [ ] Interactive Canvas
 - [x] Styling
+- [ ] Exponential range input implementation
 
 ### Tech list
 
