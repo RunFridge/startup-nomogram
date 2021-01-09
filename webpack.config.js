@@ -42,7 +42,7 @@ module.exports = function (webpackEnv) {
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        title: "Startup Nomogram",
+        title: "스타트업 손익 계산기",
         template: appHtml,
       }),
       new WebpackManifestPlugin(),
