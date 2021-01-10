@@ -14,8 +14,8 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background: #34495e;
-        color: #ecf0f1;
+        background: #0E0E10;
+        color: #fff;
         text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
     }
 `;
