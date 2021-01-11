@@ -34,6 +34,18 @@ module.exports = function (webpackEnv) {
             },
           },
         },
+        {
+          test: /\.m?js$/,
+          exclude: /(node_modules)/,
+          use: {
+            loader: "babel-loader",
+            options: ["@babel/preset-env"],
+          },
+        },
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
+        },
       ],
     },
     resolve: {
