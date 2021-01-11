@@ -1,18 +1,33 @@
 import { useState } from "react";
 
-function useExpRangeInput(): [number, number, () => void, () => void] {
+function useExpRangeInput(): [
+  number,
+  number,
+  (arg: React.ChangeEvent<HTMLInputElement>) => void,
+  (arg: React.ChangeEvent<HTMLInputElement>) => void
+] {
   const [expBase, setExpBase] = useState<number>(0);
   const [expOut, setExpOut] = useState<number>(0);
 
   const LogBaseConst = Math.log(1000) / 100;
 
-  const onExpBaseChange = () => {
-    const newExpOut = Math.exp(LogBaseConst * expBase);
+  const onExpBaseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    setExpBase(parseInt(value));
+
+    const newExpOut = Math.exp(LogBaseConst * parseInt(value));
     setExpOut(Math.round(newExpOut));
   };
 
-  const onExpOutChange = () => {
-    const newExpBase = Math.log(expOut) / LogBaseConst;
+  const onExpOutChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    setExpOut(parseFloat(value));
+
+    const newExpBase = Math.log(parseFloat(value)) / LogBaseConst;
     setExpBase(newExpBase);
   };
 
