@@ -13,11 +13,8 @@ const TitleWrapper = styled.div`
 const Title = styled.h1`
   width: 50%;
   text-align: center;
-  font-size: 3em;
-
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 2em;
-  padding: 0.5em 2em;
+  font-size: 2em;
+  margin: 1em 0;
 `;
 // STYLE END ====
 
@@ -26,10 +23,10 @@ function App() {
     <>
       <GlobalStyle />
       <TitleWrapper>
-        <img src="https://d24wdqbfu08orq.cloudfront.net/dgggcrkxq/image/upload/v1586271553/noticon/nus6dsqgee1cfqy78el1.gif" />
-        <Title>Startup Nomogram</Title>
+        <Title>💸 스타트업 손익 계산기 💸</Title>
       </TitleWrapper>
       <Calculator />
+      {/* <Calculator /> */}
     </>
   );
 }

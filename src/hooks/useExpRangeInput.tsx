@@ -10,19 +10,21 @@ class ExponentCalculator {
   }
 }
 
-function useExpRangeInput(): [
+function useExpRangeInput(
+  initialValue: number = 0
+): [
   number,
   number,
   (event: React.ChangeEvent<HTMLInputElement>) => void,
   (event: React.ChangeEvent<HTMLInputElement>) => void,
   (outMax: number) => number
 ] {
-  // States
-  const [expBase, setExpBase] = useState<number>(0);
-  const [expOut, setExpOut] = useState<number>(0);
-
-  // Calculator
   const Calculator = new ExponentCalculator();
+
+  // States
+  const initialBaseValue = Calculator.getExpBaseFromExpOut(initialValue);
+  const [expBase, setExpBase] = useState<number>(initialBaseValue);
+  const [expOut, setExpOut] = useState<number>(initialValue);
 
   // onInput Event listener
   const onExpBaseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
