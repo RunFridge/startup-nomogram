@@ -9,7 +9,7 @@ function useExpRangeInput(): [
   const [expBase, setExpBase] = useState<number>(0);
   const [expOut, setExpOut] = useState<number>(0);
 
-  const LogBaseConst = Math.log(1000) / 100;
+  const ExpWeight = Math.log(1000) / 100;
 
   const onExpBaseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -17,7 +17,7 @@ function useExpRangeInput(): [
     } = event;
     setExpBase(parseInt(value));
 
-    const newExpOut = Math.exp(LogBaseConst * parseInt(value));
+    const newExpOut = Math.exp(ExpWeight * parseInt(value));
     setExpOut(Math.round(newExpOut));
   };
 
@@ -27,7 +27,7 @@ function useExpRangeInput(): [
     } = event;
     setExpOut(parseFloat(value));
 
-    const newExpBase = Math.log(parseFloat(value)) / LogBaseConst;
+    const newExpBase = Math.log(parseFloat(value)) / ExpWeight;
     setExpBase(newExpBase);
   };
 
