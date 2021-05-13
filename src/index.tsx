@@ -1,12 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./Components/App";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import App from './App';
+import startup from './module/startup';
 
-const rootElement = document.getElementById("root");
+const store = createStore(startup, composeWithDevTools());
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
-  rootElement
+  document.getElementById('root'),
 );
