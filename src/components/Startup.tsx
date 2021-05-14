@@ -25,6 +25,7 @@ const Startup: React.FC<IProps> = ({
   profit,
   growth,
   currency,
+  timeframe,
   breakEvenPoint,
   onExpenseChange,
   onProfitChange,
@@ -32,6 +33,9 @@ const Startup: React.FC<IProps> = ({
   onTimeframeClick,
   onCurrencyClick,
 }) => {
+  const timeframeName = timeframe.name;
+  const [moneyMin, moneyMax] = timeframe.money;
+  const [growthMin, growthMax] = timeframe.growth;
   return (
     <FlexBox>
       <h1>{currency}</h1>
@@ -47,7 +51,7 @@ const Startup: React.FC<IProps> = ({
           onTimeframeClick();
         }}
       >
-        CHANGE TIME
+        {timeframeName}
       </button>
       <section>
         <input
@@ -55,6 +59,18 @@ const Startup: React.FC<IProps> = ({
           onChange={(e) => {
             onExpenseChange(+e.target.value);
           }}
+          value={expense}
+          min={moneyMin}
+          max={moneyMax}
+        />
+        <input
+          type="number"
+          onChange={(e) => {
+            onExpenseChange(+e.target.value);
+          }}
+          value={expense}
+          min={moneyMin}
+          max={moneyMax}
         />
         <h2>{Math.round(expense)}</h2>
       </section>
@@ -64,6 +80,18 @@ const Startup: React.FC<IProps> = ({
           onChange={(e) => {
             onProfitChange(+e.target.value);
           }}
+          value={profit}
+          min={moneyMin}
+          max={moneyMax}
+        />
+        <input
+          type="number"
+          onChange={(e) => {
+            onProfitChange(+e.target.value);
+          }}
+          value={profit}
+          min={moneyMin}
+          max={moneyMax}
         />
         <h2>{Math.round(profit)}</h2>
       </section>
@@ -73,6 +101,20 @@ const Startup: React.FC<IProps> = ({
           onChange={(e) => {
             onGrowthChange(+e.target.value);
           }}
+          value={growth}
+          min={growthMin}
+          max={growthMax}
+          step={0.01}
+        />
+        <input
+          type="number"
+          onChange={(e) => {
+            onGrowthChange(+e.target.value);
+          }}
+          value={growth}
+          min={growthMin}
+          max={growthMax}
+          step={0.01}
         />
         <h2>{growth.toFixed(2)}</h2>
       </section>

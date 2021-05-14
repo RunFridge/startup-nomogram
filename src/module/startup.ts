@@ -3,6 +3,13 @@ import { computeBreakEvenPoint } from '../utils/calculator';
 import { DAYS_PER_YEAR } from '../utils/constant';
 
 // Types
+type MinMax = [number, number];
+export interface ITimeframe {
+  name: 'weekly' | 'monthly' | 'yearly';
+  constant: number;
+  money: MinMax;
+  growth: MinMax;
+}
 export interface IAction {
   type: string;
   payload?: any;
@@ -12,15 +19,31 @@ export interface IState {
   expense: number;
   profit: number;
   breakEvenPoint: number;
+  timeframe: ITimeframe;
   currency: keyof typeof currencyPayloads;
 }
 
 // Payloads constants
-export const timeframeConstants = {
-  WEEKLY_TO_MONTHLY: DAYS_PER_YEAR / 7 / 12,
-  MONTHLY_TO_YEARLY: 12,
-  YEARLY_TO_WEEKLY: 1 / (DAYS_PER_YEAR / 7),
-};
+export const timeFrames: ITimeframe[] = [
+  {
+    name: 'weekly',
+    constant: 1 / (DAYS_PER_YEAR / 7),
+    money: [0, 1_000_000],
+    growth: [0, 10],
+  },
+  {
+    name: 'monthly',
+    constant: DAYS_PER_YEAR / 7 / 12,
+    money: [0, 3_000_000],
+    growth: [0, 50],
+  },
+  {
+    name: 'yearly',
+    constant: 12,
+    money: [0, 100_000_000],
+    growth: [0, 10_000],
+  },
+];
 export const currencyPayloads = {
   USD: 'USD' as const,
   KRW: 'KRW' as const,
@@ -48,19 +71,18 @@ export const updateGrowth = (growth: number) => ({
   type: UPDATE_GROWTH,
   payload: growth,
 });
-let timeframeIdx = -1;
+let timeframeIdx = 0;
 export const toggleTimeframe = () => {
-  const timeframes = Object.values(timeframeConstants);
   function nextTimeframe() {
-    timeframeIdx = ++timeframeIdx % timeframes.length;
-    return timeframes[timeframeIdx];
+    timeframeIdx = ++timeframeIdx % timeFrames.length;
+    return timeFrames[timeframeIdx];
   }
   return {
     type: TOGGLE_TIMEFRAME,
     payload: nextTimeframe(),
   };
 };
-let currencyIdx = -1;
+let currencyIdx = 0;
 export const toggleCurrency = () => {
   const currencies = Object.values(currencyPayloads);
   function nextCurrency() {
@@ -80,6 +102,7 @@ const initialState = (expense = 1600, growth = 2.5, profit = 100): IState => {
     growth,
     profit,
     breakEvenPoint: computeBreakEvenPoint(expense, growth, profit),
+    timeframe: { ...timeFrames[0], constant: 1 },
     currency: currencyPayloads.USD,
   };
 };
@@ -121,13 +144,15 @@ const startup: Reducer<IState, IAction> = (state = initialState(), action) => {
         ),
       };
     case TOGGLE_TIMEFRAME:
-      const timeframeConstant = action.payload;
+      const timeframe = action.payload;
       return {
         ...state,
-        expense: state.expense * timeframeConstant,
-        profit: state.profit * timeframeConstant,
+        timeframe,
+        expense: state.expense * timeframe.constant,
+        profit: state.profit * timeframe.constant,
         growth:
-          (Math.exp(Math.log(1 + state.growth / 100) * timeframeConstant) - 1) *
+          (Math.exp(Math.log(1 + state.growth / 100) * timeframe.constant) -
+            1) *
           100,
       };
     case TOGGLE_CURRENCY:

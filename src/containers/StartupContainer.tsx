@@ -11,9 +11,8 @@ import {
 } from '../module/startup';
 
 const StartupContainer: React.FC = () => {
-  const { expense, profit, growth, currency, breakEvenPoint } = useSelector(
-    (state: IState) => state,
-  );
+  const { expense, profit, growth, currency, breakEvenPoint, timeframe } =
+    useSelector((state: IState) => state);
   const dispatch = useDispatch();
   const onExpenseChange = useCallback(
     (expense: number) => dispatch(updateExpense(expense)),
@@ -37,6 +36,7 @@ const StartupContainer: React.FC = () => {
   );
   return (
     <Startup
+      timeframe={timeframe}
       expense={expense}
       profit={profit}
       growth={growth}
