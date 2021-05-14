@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, MouseEventHandler } from 'react';
+import React, { ChangeEventHandler, MouseEventHandler, useMemo } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
@@ -7,6 +7,10 @@ import {
   changeRevenue,
   toggleTimeframe,
 } from '../features/calculator/calculatorSlice';
+import {
+  computeBreakEvenPoint,
+  computeBreakEvenYear,
+} from '../utils/calculator';
 
 const GridBox = styled.div`
   display: grid;
@@ -14,7 +18,7 @@ const GridBox = styled.div`
 `;
 // STYLE END ==
 
-const Calculator: React.FC = () => {
+const Calculator = () => {
   const {
     expense,
     growth,
@@ -52,6 +56,13 @@ const Calculator: React.FC = () => {
         break;
     }
   };
+
+  const breakEvenYear = useMemo(() => {
+    return computeBreakEvenYear(
+      computeBreakEvenPoint(expense, growth, revenue),
+      timeframeName,
+    );
+  }, [expense, revenue, growth]);
 
   return (
     <GridBox>
@@ -91,6 +102,7 @@ const Calculator: React.FC = () => {
           step={growthStep}
         />
       </div>
+      <h3>{breakEvenYear}년</h3>
     </GridBox>
   );
 };

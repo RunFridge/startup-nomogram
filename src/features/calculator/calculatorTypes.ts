@@ -2,8 +2,10 @@ import { DAYS_PER_YEAR } from '../../utils/constant';
 
 type MinMax = [number, number];
 
+export const timeframeNames = ['weekly', 'monthly', 'yearly'] as const;
+
 export interface ITimeframe {
-  name: 'weekly' | 'monthly' | 'yearly';
+  name: typeof timeframeNames[number];
   constant: number;
   money: MinMax;
   growth: MinMax;
