@@ -1,5 +1,5 @@
 import React from 'react';
-import StartupContainer from './containers/StartupContainer';
+import Calculator from './components/Calculator';
 import GlobalStyle from './GloblaStyles';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <>
       <GlobalStyle />
       <div>
-        <StartupContainer />
+        <Calculator />
       </div>
     </>
   );
