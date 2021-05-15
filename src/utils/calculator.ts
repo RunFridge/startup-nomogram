@@ -1,5 +1,4 @@
-import { timeframeNames } from '../features/calculator/calculatorTypes';
-import { DAYS_PER_YEAR } from './constant';
+import { DAYS_PER_YEAR, TIMEFRAME_NAMES } from './constant';
 
 /*
     Compute logarithm of y with base x
@@ -27,7 +26,7 @@ export const computeBreakEvenPoint = (
 
 export const computeBreakEvenYear = (
   breakEvenPoint: number,
-  timeframe: typeof timeframeNames[number],
+  timeframe: typeof TIMEFRAME_NAMES[number],
 ): number => {
   switch (timeframe) {
     case 'weekly':
