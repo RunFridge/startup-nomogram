@@ -1,5 +1,6 @@
 import { ITimeframe } from '../features/calculator/calculatorTypes';
 
+// Calculator Constants
 export const DAYS_PER_YEAR = 365.2425;
 
 export const TIMEFRAME_NAMES = ['weekly', 'monthly', 'yearly'] as const;
@@ -28,3 +29,7 @@ export const YEARLY: ITimeframe = {
   growthStep: 1,
   growthToFixed: 0,
 };
+
+// Canvas Constants
+export const EXPENSE_COLOR = '#e74c3c' as const;
+export const REVENUE_COLOR = '#2ecc71' as const;
