@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useMemo } from 'react';
+import React, { ChangeEventHandler, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
@@ -57,7 +57,7 @@ const Calculator = () => {
     }
   };
 
-  const breakEvenYear = useMemo(() => {
+  const breakEvenYear = useCallback(() => {
     return computeBreakEvenYear(
       computeBreakEvenPoint(expense, growth, revenue),
       timeframeName,
@@ -102,7 +102,7 @@ const Calculator = () => {
           step={growthStep}
         />
       </div>
-      <h3>{breakEvenYear}년</h3>
+      <h3>{breakEvenYear()}년</h3>
     </GridBox>
   );
 };
